@@ -12,8 +12,8 @@ module.exports = {
             baseUrl: '<%= path.scripts %>',
             name : 'main',
             out: '<%= path.js %>/app.min.js',
-            optimize: 'uglify',
-            // optimize: 'none',
+            // optimize: 'uglify',
+            optimize: 'none',
             preserveLicenseComments: true
         }
     }

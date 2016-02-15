@@ -2,34 +2,65 @@ define([
     'jquery',
     'backbone',
     'underscore',
-], function($, Backbone) {
-    "use strict";
-    
+    'const'
+], function($, Backbone, _, CONST) {
+    'use strict';
+
     var ItemCollection,
-        ItemModel;
+        ItemModel,
+        TypeCollection;
 
     ItemModel = Backbone.Model.extend();
 
     ItemCollection = Backbone.Collection.extend({
-        api: '',
-
         model: ItemModel,
 
         url: function() {
-            return this.api;
+            return CONST.API_URL;
         },
 
         parse: function(response) {
+            var res = [];
+
             if (response.error) {
                 return response;
             }
 
-            return response.data;
+            _.each(response.records, function(item) {
+                res.push({
+                    case: item.fields.Case,
+                    type: item.fields.Type
+                });
+            });
+            return res;
+        }
+    });
+
+    TypeCollection = Backbone.Collection.extend({
+        url: function() {
+            return CONST.API_URL_TYPE;
+        },
+
+        parse: function(response) {
+            var res = [];
+
+            if (response.error) {
+                return response;
+            }
+
+            _.each(response.records, function(item) {
+                res.push({
+                    name: item.fields.Name,
+                    detail: item.fields.Details
+                });
+            });
+            return res;
         }
     });
 
     return {
+        ItemCollection: ItemCollection,
         ItemModel: ItemModel,
-        ItemCollection: ItemCollection
+        TypeCollection: TypeCollection
     };
 });

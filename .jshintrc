@@ -8,6 +8,7 @@
   "browser": true,
   "devel": true,
   "jquery": true,
+  "multistr": true,
   "globals": {
     "module": false,
     "require": false,

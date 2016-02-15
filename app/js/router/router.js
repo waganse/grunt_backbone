@@ -1,9 +1,8 @@
 define([
     'backbone',
-    'underscore',
     'view/view',
     'model/model'
-], function(Backbone) {
+], function(Backbone, Views, Models) {
     "use strict";
 
     var AppRouter;
@@ -21,11 +20,16 @@ define([
         },
 
         initialize: function() {
-            console.log('initialize');
+            if (this.appView) {
+                this.appView.render();
+            } else {
+                this.itemCollection = new Models.ItemCollection();
+                this.appView = new Views.AppView();
+            }
         },
 
         all: function() {
-            console.log('alla');
+            console.log('all');
         },
 
         page: function(page) {
